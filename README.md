@@ -1,1 +1,1 @@
-Easy Lua Bidings for D
+Easy Lua Bindings for D
