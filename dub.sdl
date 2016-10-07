@@ -1,0 +1,6 @@
+name "lunad"
+description "Easy Lua Bindings for D"
+authors "Patric Dexheimer"
+copyright "Copyright © 2016, this_"
+license "proprietary"
+dependency "derelict-lua" version="~>1.3.0"

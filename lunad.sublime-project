@@ -1,0 +1,227 @@
+{
+	"settings": {
+		"include_paths": [
+			"C:\\Users\\this_\\Desktop\\lunad\\source\\"
+		]
+	},
+	"folders": [
+		{
+			"follow_symlinks": true,
+			"name": "lunad",
+			"path": "C:\\Users\\this_\\Desktop\\lunad\\",
+			"folder_exclude_patterns": [
+				".dub"
+			]
+		}
+	],
+	"build_systems": [
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build debug",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=debug",
+						"--arch=x86_64"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=debug",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build release",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=release",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=release",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build release-nobounds",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=release-nobounds",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=release-nobounds",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build docs",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=docs",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=docs",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build ddox",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=ddox",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=ddox",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build profile",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=profile",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=profile",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build profile-gc",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=profile-gc",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=profile-gc",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build cov",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=cov",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=cov",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"file_regex": "^(.+)\\(([0-9]+)\\,([0-9]+)\\)\\:() (.*)$",
+			"name": "DUB build unittest-cov",
+			"variants": [
+				{
+					"name": "Run",
+					"cmd": [
+						"dub",
+						"run",
+						"--build=unittest-cov",
+						"--arch=x86"
+					]
+				}
+			],
+			"cmd": [
+				"dub",
+				"build",
+				"--build=unittest-cov",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad"
+		},
+		{
+			"name": "DUB test",
+			"cmd": [
+				"dub",
+				"test",
+				"--arch=x86"
+			],
+			"working_dir": "C:\\Users\\this_\\Desktop\\lunad",
+			"file_regex": "^(.+)\\(([0-9]+)\\)\\:() (.*)$"
+		}
+	]
+}
