@@ -1,1 +1,1940 @@
-{}
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Return",
+				"ReturnType"
+			],
+			[
+				"Retur",
+				"ReturnType"
+			],
+			[
+				"toString",
+				"toStringz"
+			],
+			[
+				"lua_push",
+				"lua_pushnumber"
+			],
+			[
+				"lua_ton",
+				"lua_tonumber"
+			],
+			[
+				"lua_to",
+				"lua_tonumber"
+			],
+			[
+				"return",
+				"returns"
+			],
+			[
+				"Type",
+				"TypeTuple"
+			],
+			[
+				"next",
+				"nextPow2"
+			],
+			[
+				"_mouse",
+				"_mousescroll"
+			],
+			[
+				"SDL_M",
+				"SDL_MOUSEWHEEL"
+			],
+			[
+				"MOUSE",
+				"MOUSEUP\t(sdl_keys.d)"
+			],
+			[
+				"SDL_MOUSEBUTTON",
+				"SDL_MOUSEBUTTONUP"
+			],
+			[
+				"_keyho",
+				"_keyhold~=cast"
+			],
+			[
+				"_ke",
+				"_keyhold"
+			],
+			[
+				"_key",
+				"_keyhold"
+			],
+			[
+				"l",
+				"ldc2"
+			],
+			[
+				"b",
+				"bin"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"value",
+				"value.length"
+			],
+			[
+				"ca",
+				"capacity"
+			],
+			[
+				"write",
+				"writeln"
+			],
+			[
+				"arr",
+				"array"
+			],
+			[
+				"copy",
+				"copy_size"
+			],
+			[
+				"_",
+				"_length"
+			],
+			[
+				"old_s",
+				"old_size\t(memory.d)"
+			],
+			[
+				"old_",
+				"old_length"
+			],
+			[
+				"joinn",
+				"joinner.length"
+			],
+			[
+				"rang",
+				"range2"
+			],
+			[
+				"joinner",
+				"joinner.ptr"
+			],
+			[
+				"Range",
+				"RangeDup"
+			],
+			[
+				"print",
+				"printf"
+			],
+			[
+				"new",
+				"new_capacity"
+			],
+			[
+				"std",
+				"std.stdio\t(app.d)"
+			],
+			[
+				"get",
+				"getView"
+			],
+			[
+				"tra",
+				"translate"
+			],
+			[
+				"SDLKE",
+				"SDLKeyPress\t(sdl.d)"
+			],
+			[
+				"view",
+				"viewMatrix"
+			],
+			[
+				"mp",
+				"matPitch"
+			],
+			[
+				"_keys",
+				"_keystates"
+			],
+			[
+				"_keysta",
+				"_keystates_old"
+			],
+			[
+				"back",
+				"backward"
+			],
+			[
+				"_pit",
+				"_pitch"
+			],
+			[
+				"SDLMOuse",
+				"SDLMouseOffset\t(sdl.d)"
+			],
+			[
+				"norma",
+				"normalized"
+			],
+			[
+				"SDL",
+				"SDLTime"
+			],
+			[
+				"timer",
+				"timer_free"
+			],
+			[
+				"set",
+				"setUniform\t(gl.d)"
+			],
+			[
+				"Po",
+				"POOL"
+			],
+			[
+				"texu",
+				"texture_id"
+			],
+			[
+				"texture",
+				"texture_id"
+			],
+			[
+				"GLTExture",
+				"GLTexturePool"
+			],
+			[
+				"texte",
+				"texture_id"
+			],
+			[
+				"GlTexture",
+				"GLTexturePool"
+			],
+			[
+				"program_",
+				"programs_layout"
+			],
+			[
+				"GLProgramLa",
+				"GLProgramLayoutPool"
+			],
+			[
+				"program",
+				"program_data"
+			],
+			[
+				"shader",
+				"shader_programs"
+			],
+			[
+				"GLPRodta",
+				"GlProgramDataPool"
+			],
+			[
+				"layotu",
+				"layout_size"
+			],
+			[
+				"verte",
+				"vertex_source"
+			],
+			[
+				"programs",
+				"program_shaders"
+			],
+			[
+				"program_s",
+				"program_shaders"
+			],
+			[
+				"shaderpro",
+				"shader_program_list"
+			],
+			[
+				"GLPRogras",
+				"GLProgramShaders\tstruct"
+			],
+			[
+				"vertex",
+				"vertex_id"
+			],
+			[
+				"GL",
+				"GLuint"
+			],
+			[
+				"fra",
+				"frag_id"
+			],
+			[
+				"filw",
+				"fileWatchUpdate"
+			],
+			[
+				"text",
+				"texture"
+			],
+			[
+				"_texut",
+				"_textures_size"
+			],
+			[
+				"attr",
+				"attrib_id"
+			],
+			[
+				"attrib",
+				"attribs_size"
+			],
+			[
+				"Attr",
+				"Attribs"
+			],
+			[
+				"glDelete",
+				"glDeleteProgram\t(51_SDL_and_modern_opengl.cpp)"
+			],
+			[
+				"vet",
+				"vertex_id"
+			],
+			[
+				"_sh",
+				"_shaders_watch"
+			],
+			[
+				"last",
+				"last_mod"
+			],
+			[
+				"ver",
+				"vertex"
+			],
+			[
+				"GLSh",
+				"GLShaderProgram\t(app.d)"
+			],
+			[
+				"Shader",
+				"ShaderType"
+			],
+			[
+				"gameWin",
+				"gameWindowTitle\t(game.d)"
+			],
+			[
+				"SDLDraw",
+				"SDLDrawLine\t(sdl.d)"
+			],
+			[
+				"SDLMouse",
+				"SDLMousePos\t(sdl.d)"
+			],
+			[
+				"planet",
+				"planet1"
+			],
+			[
+				"SDlImage",
+				"SDLLoadImage\t(sdl.d)"
+			],
+			[
+				"SDLM",
+				"SDL_MOUSEBUTTONDOWN\t(sdl.d)"
+			],
+			[
+				"SDL_MOUSE",
+				"SDL_MOUSEBUTTONUP\t(sdl.d)"
+			],
+			[
+				"objec",
+				"ObjectList"
+			],
+			[
+				"Object",
+				"ObjectList"
+			],
+			[
+				"crur",
+				"currTime"
+			],
+			[
+				"Ty",
+				"TimerType"
+			],
+			[
+				"MonoT",
+				"MonoTime"
+			],
+			[
+				"Timer",
+				"TimerType"
+			],
+			[
+				"anim",
+				"anim_counter"
+			],
+			[
+				"frames_",
+				"frames_h"
+			],
+			[
+				"fade",
+				"fadein"
+			],
+			[
+				"SDLCOlor",
+				"SDLColorMod\t(sdl.d)"
+			],
+			[
+				"SDLWin",
+				"SDLWindowSize\t(app.fractal.d_)"
+			],
+			[
+				"sdl_render",
+				"sdl_render_clear"
+			],
+			[
+				"wrtie",
+				"writeln"
+			],
+			[
+				"writel",
+				"writefln\t(app.fractal.d_)"
+			],
+			[
+				"sdl_",
+				"sdl_fps\t(app.fractal.d_)"
+			],
+			[
+				"curr",
+				"currTime"
+			],
+			[
+				"cur",
+				"currTime\t(sdl.d)"
+			],
+			[
+				"ind",
+				"index"
+			],
+			[
+				"hs",
+				"hsv"
+			],
+			[
+				"hsv",
+				"hsv2rgb"
+			],
+			[
+				"atomic",
+				"atomicOp!\"*=\"(1.5"
+			],
+			[
+				"fractal",
+				"fractal_op"
+			],
+			[
+				"SC",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"ra",
+				"range\tmodule"
+			],
+			[
+				"world",
+				"world_zoom"
+			],
+			[
+				"Poi",
+				"Point\t(sdl.d)"
+			],
+			[
+				"scr",
+				"screen2world"
+			],
+			[
+				"scne",
+				"scene_center"
+			],
+			[
+				"sce",
+				"scene_center"
+			],
+			[
+				"Point",
+				"Point2i"
+			],
+			[
+				"SDLKmo",
+				"SDLK_MOUSE1"
+			],
+			[
+				"SH",
+				"SCREEN_WIDTH"
+			],
+			[
+				"SDLWindow",
+				"SDLWindowWidth\t(sdl.d)"
+			],
+			[
+				"SDLK_M",
+				"SDLK_MOUSEWHEELUP\t(sdl.d)"
+			],
+			[
+				"SDLK_m",
+				"SDLK_MOUSE1\t(sdl.d)"
+			],
+			[
+				"sdl_w",
+				"sdl_window_height"
+			],
+			[
+				"sdlw",
+				"sdl_window_height"
+			],
+			[
+				"sdlwin",
+				"sdl_window_width"
+			],
+			[
+				"sdl",
+				"sdl_keypress"
+			],
+			[
+				"SDlk",
+				"SDLKeyHold\t(sdl.d)"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "source/app.d",
+			"settings":
+			{
+				"buffer_size": 5774,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "lunad.sublime-project",
+			"settings":
+			{
+				"buffer_size": 3956,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dub.sdl",
+			"settings":
+			{
+				"buffer_size": 180,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.lua",
+			"settings":
+			{
+				"buffer_size": 510,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 160.0,
+		"last_filter": "push",
+		"selected_items":
+		[
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"qcomim",
+				"Git: Quick Commit"
+			],
+			[
+				"qui",
+				"Git: Quick Add"
+			],
+			[
+				"quick com",
+				"Git: Quick Commit"
+			],
+			[
+				"quic add",
+				"Git: Quick Add"
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"syntaxlua",
+				"Set Syntax: Lua"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"new",
+				"ANF: New File"
+			],
+			[
+				"movee",
+				"Package Control: Remove Repository"
+			],
+			[
+				"quik",
+				"Git: Quick Commit"
+			],
+			[
+				"quick add",
+				"Git: Quick Add"
+			],
+			[
+				"newfile",
+				"ANF: New File"
+			],
+			[
+				"quicc",
+				"Git: Quick Commit"
+			],
+			[
+				"quic co",
+				"Git: Quick Commit"
+			],
+			[
+				"quick",
+				"Git: Quick Commit"
+			],
+			[
+				"renm",
+				"File: Rename"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"coo",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"color",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"colors",
+				"Colorsublime: Browse Themes"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"quic c",
+				"Git: Quick Commit"
+			],
+			[
+				"quic",
+				"Git: Quick Add"
+			],
+			[
+				"quic ",
+				"Git: Quick Commit"
+			],
+			[
+				"add c",
+				"Git: Add Current File"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				"gitadd",
+				"Git: Quick Add"
+			],
+			[
+				"comimt",
+				"Git: Commit"
+			],
+			[
+				"add",
+				"Git: Add Remote"
+			],
+			[
+				"quick comm",
+				"Git: Quick Commit"
+			],
+			[
+				"git",
+				"Git: Push"
+			],
+			[
+				"git ",
+				"Git: Quick Add"
+			],
+			[
+				"vintage",
+				"Vintageous: Toggle Vim Ctrl Keys"
+			],
+			[
+				"git pu",
+				"Git: Push"
+			],
+			[
+				"git quic",
+				"Git: Quick Commit"
+			],
+			[
+				"git add",
+				"Git: Quick Add"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"packagev",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"remove p",
+				"Package Control: Remove Package"
+			],
+			[
+				"pla",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"syntax lua",
+				"Set Syntax: Lua"
+			],
+			[
+				"vin",
+				"Vintageous: Toggle Vim Ctrl Keys"
+			],
+			[
+				"reset",
+				"Vintageous: Reset"
+			],
+			[
+				"package v",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"print",
+				"Preferences: SublimeLinter Settings – Default"
+			],
+			[
+				"select",
+				"Bookmarks: Select All"
+			],
+			[
+				"BUILD ",
+				"Build With: DUB build debug - Run"
+			],
+			[
+				"alig",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"align",
+				"Preferences: Alignment Key Bindings – User"
+			],
+			[
+				"ali",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"insall",
+				"Package Control: Install Local Dependency"
+			],
+			[
+				"keys",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"build",
+				"Build With: D - BuildDebug"
+			],
+			[
+				"respo",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"restar",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"restart",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"dkir",
+				"DKit: Update Import Paths"
+			],
+			[
+				"resta",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"res",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"dikir",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"dkit",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"dk",
+				"DKit: Restart DCD Autocompletion Server"
+			],
+			[
+				"dub",
+				"Build With: DLANG - dub"
+			],
+			[
+				"run",
+				"Build With: DLANG - Run"
+			],
+			[
+				"update",
+				"DKit: Update Project"
+			],
+			[
+				"dlang run",
+				"Build With: DLANG - Run"
+			],
+			[
+				"dlang ur",
+				"Build With: DLANG - Run"
+			],
+			[
+				"debug ",
+				"SublimeLinter: Enable Debug Mode"
+			],
+			[
+				"dlang",
+				"Build With: DLANG"
+			],
+			[
+				"save",
+				"Project: Save As"
+			],
+			[
+				"new fie",
+				"ANF: New File"
+			],
+			[
+				"create pro",
+				"DKit: Create Project From DUB Package File"
+			],
+			[
+				"glsl",
+				"Set Syntax: GLSL"
+			],
+			[
+				"new file",
+				"ANF: New File"
+			],
+			[
+				"gls",
+				"Set Syntax: GLSL"
+			],
+			[
+				"new fiel",
+				"ANF: New File"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"syntax gl",
+				"Set Syntax: GLSL"
+			],
+			[
+				"new ",
+				"ANF: New File"
+			],
+			[
+				"termina",
+				"Terminal: Open"
+			],
+			[
+				"replpyt",
+				"SublimeREPL: Python"
+			],
+			[
+				"REPllua",
+				"SublimeREPL: Lua"
+			],
+			[
+				"renae",
+				"File: Rename"
+			],
+			[
+				"rena",
+				"File: Rename"
+			],
+			[
+				"goto",
+				"DKit: Goto Definition"
+			],
+			[
+				"relppytho",
+				"SublimeREPL: Python"
+			],
+			[
+				"RELP",
+				"SublimeREPL: Python"
+			],
+			[
+				"new fle",
+				"ANF: New File"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"buid",
+				"Build With: CPP - Run"
+			],
+			[
+				"instlal",
+				"Package Control: Install Package"
+			],
+			[
+				"edit sn",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"edit sni",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"gdb",
+				"SublimeGDB: Stop Debugging"
+			],
+			[
+				"break",
+				"SublimeGDB: Open Breakpoint View"
+			],
+			[
+				"snippe",
+				"SnippetMaker: Make Snippet"
+			],
+			[
+				"settings",
+				"Preferences: Settings - Default"
+			],
+			[
+				"c++11",
+				"Set Syntax: C++11"
+			],
+			[
+				"c++",
+				"Set Syntax: C++11"
+			],
+			[
+				"istall",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 514.0
+	},
+	"console":
+	{
+		"height": 241.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"sds",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/this_/Desktop/lunad"
+	],
+	"file_history":
+	[
+		"/C/Users/this_/Desktop/lunad/README.md",
+		"/D/game/old_sources/sdl.d",
+		"/D/game/source/filewatch.d",
+		"/D/game/resources/shaders/frag.frag",
+		"/D/game/source/sdl.d",
+		"/C/Users/this_/Desktop/game_cpp/main.cpp",
+		"/D/game/source/dex.d",
+		"/D/game/dub.sdl",
+		"/D/game/source/sdl_keys.d",
+		"/D/game/source/timer.d",
+		"/D/game/source/resources/shaders/frag.frag",
+		"/C/Users/this_/Documents/game/source/app.d",
+		"/C/Users/this_/Documents/game/old_sources/util/pool.d",
+		"/C/Users/this_/Documents/game/old_sources/util/filewatch.d",
+		"/C/Users/this_/Documents/game/old_sources/util/timer.d",
+		"/C/Users/this_/Documents/game/old_sources/gl.d",
+		"/D/game/source/app.d",
+		"/C/Users/this_/Documents/game/source/imports.d",
+		"/C/Users/this_/Documents/game/source/lib.d",
+		"/C/Users/this_/Documents/game/old_sources/sdl.d",
+		"/C/Users/this_/Documents/game/old_sources/util.d",
+		"/C/Users/this_/Desktop/test.elm",
+		"/D/game/game.sublime-project",
+		"/D/Sublime Text/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/this_/Desktop/example/dub.sdl",
+		"/D/Vim/_vimrc",
+		"/D/Sublime Text/Data/Packages/Vintageous/Default.sublime-keymap",
+		"/C/Users/this_/Documents/game/source/dex/dex.d",
+		"/C/Users/this_/Documents/game/source/dex/memory.d",
+		"/C/Users/this_/Documents/game/source/dex/stdio.d",
+		"/C/Users/this_/Documents/game/source/dex/range.d",
+		"/C/Users/this_/Documents/game/source/dex/timer.d",
+		"/C/Users/this_/Documents/game/source/dex/string.d",
+		"/C/Users/this_/Documents/game/dub.json",
+		"/C/Users/this_/Documents/game/dub.selections.json",
+		"/C/Users/this_/Desktop/dexlang/source/app.d",
+		"/C/Users/this_/Documents/game/game.sublime-project",
+		"/C/Users/this_/Desktop/mql4/main.mq4",
+		"/D/Sublime Text/Data/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/C/Users/this_/Desktop/Untitled2.c",
+		"/C/Users/this_/AppData/Local/Temp/tmp4C2A.tmp.d",
+		"/C/Users/this_/AppData/Local/Temp/tmp1848.tmp.d",
+		"/C/Users/this_/AppData/Local/Temp/Rar$DRa0.822/visual-studio-keyboard-like-sublime-text-master/README.md",
+		"/C/Users/this_/Google Drive/game___/dub.json",
+		"/C/Users/this_/Desktop/main.js",
+		"/C/Users/this_/Google Drive/game/source/sdl.d",
+		"/C/Users/this_/Google Drive/game/source/app.d",
+		"/C/Users/this_/Documents/game/source/resources/lib.d",
+		"/C/Users/this_/Google Drive/game/dub.json",
+		"/C/Users/this_/Desktop/game/source/imports.d",
+		"/C/Users/this_/Desktop/game/dub.json",
+		"/C/Users/this_/Downloads/app (1).d",
+		"/C/Users/this_/Downloads/pool.d",
+		"/C/Users/this_/Downloads/camera.d",
+		"/C/Users/this_/Google Drive/game/source/camera.d",
+		"/C/Users/this_/Downloads/gl.d",
+		"/C/Users/this_/Google Drive/game/source/gl.d",
+		"/C/Users/this_/Downloads/imports.d",
+		"/C/Users/this_/Google Drive/game/source/imports.d",
+		"/C/Users/this_/Downloads/sdl (1).d",
+		"/C/Users/this_/Downloads/filewatch.d",
+		"/C/Users/this_/Downloads/timer.d",
+		"/C/Users/this_/Google Drive/game/source/util/timer.d",
+		"/C/Users/this_/Google Drive/game/source/util/pool.d",
+		"/C/Users/this_/Google Drive/game/source/util/filewatch.d",
+		"/C/Users/this_/Google Drive/game___/source/gl.d",
+		"/C/Users/this_/Google Drive/game/resources/shaders/vertex.vert",
+		"/C/Users/this_/Downloads/sdl.d",
+		"/C/Users/this_/Downloads/app.d",
+		"/C/Users/this_/Google Drive/game/debug.bat",
+		"/C/Users/this_/Google Drive/game/source/util.d",
+		"/C/Users/this_/Desktop/sdl.old.d",
+		"/C/Users/this_/Desktop/sdl.old.copia.d",
+		"/C/Users/this_/Google Drive/game/source/sdl_main.d",
+		"/C/Users/this_/Google Drive/game/source/sdl_input.d",
+		"/C/Users/this_/Google Drive/game/source/sdl.old.d",
+		"/C/Users/this_/Google Drive/game/source/sdl.old.copia.d",
+		"/home/patric/Dropbox/game/source/util/pool.d",
+		"/home/patric/Dropbox/game/resources/shaders/frag.frag",
+		"/home/patric/Dropbox/game/resources/shaders/vertex.vert",
+		"/home/patric/Dropbox/game/source/util.d",
+		"/home/patric/.config/sublime-text-3/Packages/Alignment/Default (Linux).sublime-keymap",
+		"/home/patric/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/patric/.config/sublime-text-3/Packages/Alignment/Base File.sublime-settings",
+		"/home/patric/.config/sublime-text-3/Packages/User/Base File.sublime-settings",
+		"/home/patric/Dropbox/game/source/sdl.d",
+		"/home/patric/.config/sublime-text-3/Packages/User/google_search.sublime-settings",
+		"/home/patric/.config/sublime-text-3/Packages/google-search/google_search.sublime-settings",
+		"/home/patric/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/patric/.config/sublime-text-3/Packages/DKit/DKit.sublime-settings",
+		"/home/patric/Dropbox/game/source/gl.d",
+		"/C/Users/this_/Dropbox/game/resources/shaders/program1.program",
+		"/C/Users/this_/Dropbox/game/resources/shaders/frag.frag",
+		"/C/Users/this_/Dropbox/game/resources/shaders/vertex2.vert",
+		"/C/Users/this_/Dropbox/game/resources/shaders/vertex.vert",
+		"/C/Users/this_/Dropbox/game/source/app.d",
+		"/C/Users/this_/Dropbox/game/source/util/filewatch.d",
+		"/D/Sublime Text/Data/Packages/DKit/DKit.sublime-settings",
+		"/C/Users/this_/Dropbox/game/project.sublime-project",
+		"/D/Sublime Text/Data/Packages/User/DLANG.sublime-build",
+		"/C/Users/this_/Dropbox/game/app.d",
+		"/C/Users/this_/Dropbox/game_d_/project.sublime-project",
+		"/C/Users/this_/app.d",
+		"/C/Users/this_/Dropbox/game_d/res/shaders/frag.frag",
+		"/C/Users/this_/Dropbox/game_d/res/shaders/vertex.vertex",
+		"/C/Users/this_/Dropbox/game_d/sdl_tutorial/51_SDL_and_modern_opengl/51_SDL_and_modern_opengl.cpp",
+		"/C/Users/this_/Dropbox/game_d/debug.bat",
+		"/C/Users/this_/Dropbox/tables/source/app.d_",
+		"/C/Users/this_/Dropbox/fractal_d/source/sdl.d.old",
+		"/C/Users/this_/Dropbox/game_d/source/app.d",
+		"/C/Users/this_/Dropbox/game_d/res/shaders/frag.shader",
+		"/C/Users/this_/Dropbox/game_d/res/shaders/vertex.shader",
+		"/C/Users/this_/Desktop/game_d/dub.selections.json",
+		"/C/Users/this_/Desktop/game_d/project.sublime-project",
+		"/C/Users/this_/Desktop/game_d/dub.json",
+		"/C/Users/this_/Desktop/game_d/source/app.d_",
+		"/C/Users/this_/Desktop/game_d/source/sdl.d",
+		"/C/Users/this_/Dropbox/fractal_d/source/app.d",
+		"/C/Users/this_/Dropbox/game_d/sdl_tutorial/07_texture_loading_and_rendering/07_texture_loading_and_rendering.cpp",
+		"/C/Users/this_/AppData/Roaming/dub/packages/derelict-sdl2-2.0.0/dub.json",
+		"/C/Users/this_/AppData/Roaming/dub/packages/gl3n-1.3.1/dub.json",
+		"/C/Users/this_/AppData/Roaming/dub/packages/gl3n-1.3.1/index.d",
+		"/C/Users/this_/AppData/Roaming/dub/packages/derelict-util-2.0.6/dub.json",
+		"/C/Users/this_/Dropbox/fractal_d/project.sublime-project",
+		"/D/Sublime Text/Data/Packages/User/Preferences.sublime-settings",
+		"/C/Users/this_/Dropbox/game_d/sdl_tutorial/16_true_type_fonts/16_true_type_fonts.cpp",
+		"/C/Users/this_/Dropbox/game_d/source/sdl.d",
+		"/C/Users/this_/Dropbox/game_d/source/util.d"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 96.0,
+		"where_history":
+		[
+			"D:\\game",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			",",
+			"inner",
+			"L,",
+			"L",
+			"FOO",
+			"diString",
+			"sizeof",
+			"Foo",
+			"sizeof",
+			"Testing",
+			"{\n",
+			"fromStringz",
+			"printf",
+			"add",
+			"toStringz",
+			"add",
+			"float",
+			"mult",
+			"int",
+			"add",
+			"print",
+			"ReturnType",
+			"Type",
+			"auto",
+			"args",
+			"index",
+			"( ",
+			"cast(i",
+			"ast(i",
+			" cas",
+			"cast",
+			"index",
+			"Type",
+			"index",
+			"auto r = ",
+			"lua_tonumber",
+			"Parameters",
+			"foo",
+			"multiply",
+			"void",
+			"LuaFun",
+			"string",
+			" )",
+			"Type",
+			"LuaFun",
+			"string",
+			"Ttype",
+			"T)",
+			"luaL_ref",
+			"lua_getglobal",
+			"lua_State",
+			"name",
+			", ",
+			"fromStringz",
+			"fun_index",
+			"return",
+			"name",
+			"getGlobalValue",
+			"Foo",
+			"value",
+			"findex",
+			"fun_name",
+			"lua_call",
+			"f_index",
+			"null",
+			"value",
+			"LuaFunction",
+			"string",
+			",",
+			"typeof",
+			"float",
+			"int",
+			"multiply",
+			"function",
+			"getFunction",
+			"LunadState",
+			"x86_64",
+			"lua_tointeger",
+			"nothrow",
+			"args",
+			"writeln",
+			"pritn",
+			"print",
+			"int",
+			"ctolua",
+			"fromStringz",
+			"lua_var",
+			" \"",
+			"writeln",
+			"lua_state",
+			"StrShader",
+			"Str_GLShader",
+			"_shaders",
+			"to!",
+			"data",
+			"ptr",
+			"GLShaderObj",
+			"ShaderPool",
+			"Shader",
+			"shader",
+			"Shader",
+			"SHADER",
+			"shader",
+			"Shader",
+			"shader",
+			"Shader",
+			"shader",
+			"Shader",
+			"shader",
+			"Shader",
+			"shader",
+			"Shader",
+			"shader",
+			"Shader",
+			"shader",
+			"next",
+			"GLShaderObj",
+			"{\n",
+			"shader_id",
+			"Array!",
+			"Array",
+			"Arra",
+			"size_t",
+			"PoolTeste",
+			"dependency",
+			"teste",
+			"void",
+			"add"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "source/app.d",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5774,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4246,
+								4246
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										4525,
+										4526
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										4181,
+										4182
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/D/D.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3684.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "lunad.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3956,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								403,
+								403
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										520,
+										521
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										402,
+										403
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "dub.sdl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 180,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								180,
+								180
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "main.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 510,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								509,
+								509
+							]
+						],
+						"settings":
+						{
+							"_anf_new": "",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/Lua/Lua.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 39.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.617954070981,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 155.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git-commit":
+	{
+		"height": 132.0
+	},
+	"output.git-push":
+	{
+		"height": 132.0
+	},
+	"pinned_build_system": "DUB build debug",
+	"project": "lunad.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"app",
+				"source\\app.d"
+			],
+			[
+				"sdl",
+				"dub.sdl"
+			],
+			[
+				"main",
+				"main.lua"
+			],
+			[
+				"gl",
+				"source\\gl.d"
+			],
+			[
+				"app.",
+				"game\\source\\app.d"
+			],
+			[
+				"memo",
+				"game\\source\\dex\\memory.d"
+			],
+			[
+				"std",
+				"game\\source\\dex\\stdout.d"
+			],
+			[
+				"vertex",
+				"resources\\shaders\\vertex.vert"
+			],
+			[
+				"debug",
+				"debug.bat"
+			],
+			[
+				"util",
+				"source/util.d"
+			],
+			[
+				"pool",
+				"source/util/pool.d"
+			],
+			[
+				"frag",
+				"resources/shaders/frag.frag"
+			],
+			[
+				"pol",
+				"source/util/pool.d"
+			],
+			[
+				"progmra",
+				"resources\\shaders\\program1.program"
+			],
+			[
+				"file",
+				"source\\util\\filewatch.d"
+			],
+			[
+				"dub",
+				"dub.json"
+			],
+			[
+				"appfra",
+				"source\\app.fractal.d_"
+			],
+			[
+				"sub",
+				"project.sublime-project"
+			],
+			[
+				"subli",
+				"project.sublime-project"
+			],
+			[
+				"cs",
+				"cs.h"
+			],
+			[
+				"ma",
+				"main.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 220.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 241.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
