@@ -13,3 +13,12 @@ person = {
 
 x = 10
 print( "inc(x) = " .. inc(x) )
+
+function inner(x,y)
+	print("Inner")
+	return x + y
+end
+
+function luaf(x, y)
+	return inner
+end

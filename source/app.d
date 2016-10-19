@@ -7,6 +7,31 @@ static this(){
 	DerelictLua.load();
 }
 
+void LuaDump(lua_State* L){
+	import core.stdc.stdio;
+	int i;
+	int top = lua_gettop(L);
+	for (i = 1; i <= top; i++) {  /* repeat for each level */
+        int t = lua_type(L, i);
+        switch (t) {
+			case LUA_TSTRING:  /* strings */
+				printf("'%s'", lua_tostring(L, i));
+			break;
+			case LUA_TBOOLEAN:  /* booleans */
+				printf(lua_toboolean(L, i) ? "true" : "false");
+			break;
+			case LUA_TNUMBER:  /* numbers */
+				printf("%g", lua_tonumber(L, i));
+			break;
+			default:  /* other values */
+				printf("%s", lua_typename(L, t));
+			break;
+        }
+    	printf("  ");  /* put a separator */
+    }
+    printf("\n");  /* end the listing */
+}
+
 auto LuaPushValue(Type)(lua_State* L, Type val){
 	static if( __traits(isIntegral, Type) ){
 		lua_pushinteger(L, val);
@@ -29,16 +54,16 @@ void LuaCallFunction( Return = void , Args...)(lua_State* L, Args args ){
     }
 }
 
-auto LuaConvert(Type)(lua_State* L ){
+auto LuaGetValue(Type)(lua_State* L, int index = -1 ){
 	import std.traits : TemplateOf;
 
 	static if( __traits(isIntegral, Type) ){
-		auto r = cast(Type)lua_tointeger(L, -1);
+		auto r = cast(Type)lua_tointeger(L, index);
 	}else static if( __traits(isFloating, Type) ){
-		auto r = cast(Type)lua_tonumber(L, -1);
+		auto r = cast(Type)lua_tonumber(L, index);
 	}
 	else static if( is(Type == string ) ){
-		auto r = cast(Type)lua_tostring(L, -1).fromStringz;
+		auto r = cast(Type)lua_tostring(L, index).fromStringz;
 	}
 	else static if( is(Type == LuaObject ) ){
 		auto r = LuaObject(L, luaL_ref(L, LUA_REGISTRYINDEX) );
@@ -48,39 +73,6 @@ auto LuaConvert(Type)(lua_State* L ){
 	}
 	return r; 
 }
-
-
-
-//alias LuaFun = LuaValue;
-
-
-
-extern(C) auto multiply(lua_State* L) nothrow {
-	import core.stdc.stdio : printf;
-
-	try{
-
-		auto args = lua_gettop (L);
-		//try{
-		//}catch(Exception e){
-		//}
-		auto a = cast(int)lua_tonumber(L,-1);
-		auto b = cast(int)lua_tonumber(L,-2);
-
-
-		//printf("%i * %i",a,b);
-
-		lua_pushnumber(L, a * b);
-
-		auto returns = 1;
-		return returns;
-	}
-	catch(Exception e){}
-
-	return 0;
-}
-
-
 
 void LuaPushFunction(Fun)(lua_State* L , Fun fun ){
 	extern(C) auto inner(lua_State* L) nothrow {
@@ -129,22 +121,6 @@ void LuaPushFunction(Fun)(lua_State* L , Fun fun ){
 }
 
 
-struct Test{
-	int x =  100;
-	float y;
-	void add(int x_){
-		//x+=x_ ;
-	}
-	auto get(){
-		return 1;
-	}
-	static auto TypeName(){
-		return "Test";
-	}
-
-	void add2(T)(T t){}
-
-}
 
 string FieldGet( T , alias M )()  {
 	enum Type = __traits(identifier, T);
@@ -156,16 +132,14 @@ string FieldSet( T , alias M )()  {
 	return "__traits(compiles, { "~Type~" t; t."~M~" = typeof( t."~M~" ).init ; })";
 }
 
-string FunctionCall( T , alias M )()  {
-	enum Type = __traits(identifier, T);
-	return "is ( typeof(__traits(getMember,"~Type~", \""~M~"\")) == function)";
-}
+//string FunctionCall( T , alias M )()  {
+//	enum Type = __traits(identifier, T);
+//	return "is ( typeof(__traits(getMember,"~Type~", \""~M~"\")) == function)";
+//}
 
 
 
 struct LunadStruct{
-	
-
 	lua_State* L;
 	this( lua_State* l){
 		L = l;
@@ -198,7 +172,6 @@ struct LunadStruct{
 		}
 		lua_setglobal(L, var.toStringz);
 	}
-
 	//auto register( Type )(){
 	//	foreach( member ; __traits( allMembers, Test ) ){
 	//		static if( mixin( FieldGet!(Test, member)) ) {
@@ -219,30 +192,7 @@ struct LunadStruct{
 	//}
 }
 
-void LuaDump(lua_State* L){
-	import core.stdc.stdlib;
-	int i;
-	int top = lua_gettop(L);
-	for (i = 1; i <= top; i++) {  /* repeat for each level */
-        int t = lua_type(L, i);
-        switch (t) {
-			case LUA_TSTRING:  /* strings */
-				printf("'%s'", lua_tostring(L, i));
-			break;
-			case LUA_TBOOLEAN:  /* booleans */
-				printf(lua_toboolean(L, i) ? "true" : "false");
-			break;
-			case LUA_TNUMBER:  /* numbers */
-				printf("%g", lua_tonumber(L, i));
-			break;
-			default:  /* other values */
-				printf("%s", lua_typename(L, t));
-			break;
-        }
-    	printf("  ");  /* put a separator */
-    }
-    printf("\n");  /* end the listing */
-}
+
 
 struct LuaObject{
 	lua_State* L;
@@ -253,7 +203,7 @@ struct LuaObject{
 	}
 	auto as(T)(){
 		lua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);
-		auto r = L.LuaConvert!T;
+		auto r = L.LuaGetValue!T(-1);
 		lua_pop(L, 1);
 		return r;
 	}
@@ -283,83 +233,19 @@ struct LuaObject{
 		LuaPushValue(L, val);
 		lua_settable(L, -3);
 	}
+
+	auto opCall( Args... )(Args args){
+		lua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);
+		LuaCallFunction(L, args);
+		return LuaObject( L, luaL_ref(L, LUA_REGISTRYINDEX ) );
+		
+	}
 }
 
-struct LuaTable{
-
-}
+struct LuaTable{}
 
 auto Lunad(){
 	return LunadStruct( luaL_newstate() );
-}
-
-auto inc(int x){
-	return x + 1;
-}
-
-void LuaPushFunction2(Fun)(lua_State* L , Fun fun ){
-
-	extern(C) auto inner(lua_State* L) nothrow {
-		import std.traits   : Parameters, ReturnType;
-		import std.typecons : Tuple;
-		import core.stdc.stdio: printf;
-
-		try{
-			/*GET FUNCTION*/
-			//LuaDump(L);
-
-			auto f = cast(Fun) lua_touserdata(L,1);
-			//LuaDump(L);
-			writeln(f(10));
-
-			///*INPUT*/
-			//Tuple!(Parameters!Fun) args;
-			//auto args_n = lua_gettop (L);
-			//foreach( i, Type ; Parameters!Fun ){
-			//	immutable int offset 	= cast(int)(-1 - i);
-			//	immutable size_t index  = args.length - i - 1;
-			//	static if( __traits(isIntegral, Type) ){
-			//		args[index] = cast(Type)lua_tointeger(L,  offset );
-			//	}else static if( __traits(isFloating, Type) ){
-			//		args[index] = cast(Type)lua_tonumber(L, offset );
-			//	}else static if( is(Type == string ) ){
-			//		args[index] = cast(Type)lua_tostring(L, offset ).fromStringz;
-			//	}
-			//}
-
-			///*RETURN*/
-			//alias Return = ReturnType!Fun;
-			//auto r = fun(args.expand);
-			//static if( __traits(isIntegral, Return) ){
-			//	lua_pushinteger(L, r);
-			//}else static if( __traits(isFloating, Return) ){
-			//	lua_pushnumber(L, r);
-			//}else static if( is(Return == string ) ){
-			//	lua_pushstring(L, r.toStringz);
-			//}
-
-		}catch(Exception e){ printf( e.msg.toStringz );}
-		return 1;
-	}
-	lua_pushlightuserdata(L, fun);
-	luaL_newmetatable(L, "__meta_fun");
-	lua_pushcfunction(L, &inner);
-	lua_setfield(L, -2, "__call");
-  	lua_setmetatable(L, -2);
-}
-
-struct Teste{
-	lua_State* L;
-	auto opIndexAssign( Type )(Type val, string var ){
-		import std.traits : isSomeFunction;
-
-		static if( isSomeFunction!Type ){
-			LuaPushFunction2(L, val);
-		}else{
-			LuaPushValue(L, val);
-		}
-		lua_setglobal(L, var.toStringz);
-	}
 }
 
 void main(){
@@ -367,40 +253,22 @@ void main(){
 
 	auto lua = Lunad();
 
+	lua["x"] = 10;
+	lua["x"].as!int.writeln;
 
-
-	//lua["x"].as!int.writeln;
-
-	//lua_pushinteger(lua.L, 100);
- //   lua_setglobal(lua.L, "y".toStringz );
-	lua["y"] = 100;
-	//
-	//lua["y"].as!int.writeln;
-
-	lua["info"] = LuaTable();
-	lua["info"]["name"] = "Patric";
-	lua["info"]["age"] = "31";
-	lua["info"]["other"] = LuaTable();
-	lua["info"]["other"]["value"] = 10;
-
-	lua.doFile("main.lua");
-
-
-	lua["person"]["name"].as!string.writeln;
-	lua["person"]["last"].as!string.writeln;
-	lua["person"]["age"].as!string.writeln;
-
-	lua["person"]["infos"]["a"].as!string.writeln;
-	lua["person"]["infos"]["b"].as!string.writeln;
+	//NEXT TODO
+	//metatables is missing!! something like : 
+	//lua["mt"] = LuaMetaTable();
+	//lua.setmetatable("table", "mt");
+	//lua.registerModule!main(int, float);
+	//lua.registerStruct!Test(int, float);
+	//lua.registerTemplate!template_func(int, float);
 
 
 
 	//lua["info"]["name"].as!string.writeln;
 	//lua["info"]["age"].as!int.writeln;
 	//lua["info"]["other"]["value"].as!int.writeln;
-
-	lua["inc"] = &inc;
-	lua.doFile("main.lua");
 
 
 	//foreach( member ; __traits( allMembers, Test ) ){
