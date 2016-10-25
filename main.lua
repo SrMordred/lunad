@@ -11,14 +11,8 @@ person = {
 	}
 }
 
-x = 10
-print( "inc(x) = " .. inc(x) )
 
-function inner(x,y)
-	print("Inner")
-	return x + y
-end
+print(add(20,40))
+print(div(20,10))
+showme(20)
 
-function luaf(x, y)
-	return inner
-end

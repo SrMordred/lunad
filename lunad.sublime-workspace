@@ -520,21 +520,19 @@
 	"buffers":
 	[
 		{
-			"contents": "import std.stdio : writeln;\nimport std.string : toStringz, fromStringz;\n\nimport derelict.lua.lua;\n\nstatic this(){\n\tDerelictLua.load();\n}\n\nauto LuaPushValue(Type)(lua_State* L, Type val){\n\tstatic if( __traits(isIntegral, Type) ){\n\t\tlua_pushinteger(L, val);\n\t}else static if( __traits(isFloating, Type) ){\n\t\tlua_pushnumber(L, val);\n\t}else static if( is(Type == string ) ){\n\t\tlua_pushstring(L, val.toStringz);\n\t}else static if( is(Type == LuaTable ) ){\n\t\tlua_newtable(L);\n\t}\n}\n\nvoid LuaCallFunction( Return = void , Args...)(lua_State* L, Args args ){\n\timport core.stdc.stdio : printf;\n\tforeach( arg ; args ){\n\t\tLuaPushValue(L, arg);\n\t}\n\tif (lua_pcall(L, Args.length, 1, 0) != 0) {\n        printf(\"Error running function f:%s`\", lua_tostring(L, -1));\n    }\n}\n\nauto LuaConvert(Type)(lua_State* L ){\n\timport std.traits : TemplateOf;\n\n\tstatic if( __traits(isIntegral, Type) ){\n\t\tauto r = cast(Type)lua_tointeger(L, -1);\n\t}else static if( __traits(isFloating, Type) ){\n\t\tauto r = cast(Type)lua_tonumber(L, -1);\n\t}\n\telse static if( is(Type == string ) ){\n\t\tauto r = cast(Type)lua_tostring(L, -1).fromStringz;\n\t}\n\telse static if( is(Type == LuaObject ) ){\n\t\tauto r = LuaObject(L, luaL_ref(L, LUA_REGISTRYINDEX) );\n\t}\n\telse{\n\t\tauto r = null;\n\t}\n\treturn r; \n}\n\nvoid LuaPushFunction(Fun)(lua_State* L , Fun fun ){\n\textern(C) auto inner(lua_State* L) nothrow {\n\t\timport std.traits   : Parameters, ReturnType;\n\t\timport std.typecons : Tuple;\n\t\timport core.stdc.stdio: printf;\n\n\t\ttry{\n\t\t\t/*GET FUNCTION*/\n\t\t\tauto fun = cast(Fun) lua_touserdata(L,1);\n\n\t\t\t/*INPUT*/\n\t\t\tTuple!(Parameters!Fun) args;\n\t\t\tauto args_n = lua_gettop (L);\n\t\t\tforeach( i, Type ; Parameters!Fun ){\n\t\t\t\timmutable int offset \t= cast(int)(-1 - i);\n\t\t\t\timmutable size_t index  = args.length - i - 1;\n\t\t\t\tstatic if( __traits(isIntegral, Type) ){\n\t\t\t\t\targs[index] = cast(Type)lua_tointeger(L,  offset );\n\t\t\t\t}else static if( __traits(isFloating, Type) ){\n\t\t\t\t\targs[index] = cast(Type)lua_tonumber(L, offset );\n\t\t\t\t}else static if( is(Type == string ) ){\n\t\t\t\t\targs[index] = cast(Type)lua_tostring(L, offset ).fromStringz;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t/*RETURN*/\n\t\t\talias Return = ReturnType!Fun;\n\t\t\tauto r = fun(args.expand);\n\t\t\tstatic if( __traits(isIntegral, Return) ){\n\t\t\t\tlua_pushinteger(L, r);\n\t\t\t}else static if( __traits(isFloating, Return) ){\n\t\t\t\tlua_pushnumber(L, r);\n\t\t\t}else static if( is(Return == string ) ){\n\t\t\t\tlua_pushstring(L, r.toStringz);\n\t\t\t}\n\n\t\t}catch(Exception e){ printf( e.msg.toStringz );}\n\t\treturn 1;\n\t}\n\tlua_pushlightuserdata(L, fun);\n\tluaL_newmetatable(L, \"__meta_fun\");\n\tlua_pushcfunction(L, &inner);\n\tlua_setfield(L, -2, \"__call\");\n  \tlua_setmetatable(L, -2);\n}\n\n\nstruct Test{\n\tint x =  100;\n\tfloat y;\n\tvoid add(int x_){\n\t\t//x+=x_ ;\n\t}\n\tauto get(){\n\t\treturn 1;\n\t}\n\tstatic auto TypeName(){\n\t\treturn \"Test\";\n\t}\n\n\tvoid add2(T)(T t){}\n\n}\n\nstring FieldGet( T , alias M )()  {\n\tenum Type = __traits(identifier, T);\n\treturn \"__traits(compiles, { \"~Type~\" t; auto v = t.\"~M~\"; })\";\n}\n\nstring FieldSet( T , alias M )()  {\n\tenum Type = __traits(identifier, T);\n\treturn \"__traits(compiles, { \"~Type~\" t; t.\"~M~\" = typeof( t.\"~M~\" ).init ; })\";\n}\ns\nstring FunctionCall( T , alias M )()  {\n\tenum Type = __traits(identifier, T);\n\treturn \"is ( typeof(__traits(getMember,\"~Type~\", \\\"\"~M~\"\\\")) == function)\";\n}\n\n\n\nstruct LunadStruct{\n\t\n\n\tlua_State* L;\n\tthis( lua_State* l){\n\t\tL = l;\n\t\tluaL_openlibs( L );\n\t}\n\n\tvoid doString( string code ){\n\t\tluaL_loadstring(L, code.toStringz);\n  \t    lua_pcall(L,0,0,0);\n\t}\n\n\tvoid doFile( string file ){\n\t\tif ( luaL_dofile( L, file.toStringz ) ){\n\t\t\twriteln( \"Error loading file: \\n\", cast(string)lua_tostring(L, -1).fromStringz );\n\t\t}\n\t}\n\n\tauto opIndex( string var ){\n\t\tlua_getglobal(L, var.toStringz);\n\t\treturn LuaObject( L, luaL_ref(L, LUA_REGISTRYINDEX ) );\n\t}\n\n\tauto opIndexAssign( Type )(Type val, string var ){\n\t\timport std.traits : isSomeFunction;\n\n\t\tstatic if( isSomeFunction!Type ){\n\t\t\tLuaPushFunction(L, val);\n\t\t}else{\n\t\t\tLuaPushValue(L, val);\n\t\t}\n\t\tlua_setglobal(L, var.toStringz);\n\t}\n\n\t//auto register( Type )(){\n\t//\tforeach( member ; __traits( allMembers, Test ) ){\n\t//\t\tstatic if( mixin( FieldGet!(Test, member)) ) {\n\t//\t\t\twriteln( \"GETTER : \", member );\n\t//\t\t}\n\t//\t\tstatic if( mixin( FieldSet!(Test, member)) ) {\n\t//\t\t\twriteln( \"SETTER : \", member );\n\t//\t\t}\n\t//\t\t//writeln( is ( typeof(__traits(getMember,Test, member)) == function ));\n\t//\t\tstatic if( mixin( FunctionCall!(Test, member)) ) {\n\t//\t\t\twriteln( \"IS FUNCTION : \", member );\n\t//\t\t}\n\n\t//\t\tstatic if(__traits(isTemplate, __traits(getMember, Test, member))){\n\t//\t\t\twriteln( \"IS template : \", member );\t\n\t//\t\t}\n\t//\t}\n\t//}\n}\n\nvoid LuaDump(lua_State* L){\n\timport core.stdc.stdlib;\n\tint i;\n\tint top = lua_gettop(L);\n\tfor (i = 1; i <= top; i++) {  /* repeat for each level */\n        int t = lua_type(L, i);\n        switch (t) {\n\t\t\tcase LUA_TSTRING:  /* strings */\n\t\t\t\tprintf(\"'%s'\", lua_tostring(L, i));\n\t\t\tbreak;\n\t\t\tcase LUA_TBOOLEAN:  /* booleans */\n\t\t\t\tprintf(lua_toboolean(L, i) ? \"true\" : \"false\");\n\t\t\tbreak;\n\t\t\tcase LUA_TNUMBER:  /* numbers */\n\t\t\t\tprintf(\"%g\", lua_tonumber(L, i));\n\t\t\tbreak;\n\t\t\tdefault:  /* other values */\n\t\t\t\tprintf(\"%s\", lua_typename(L, t));\n\t\t\tbreak;\n        }\n    \tprintf(\"  \");  /* put a separator */\n    }\n    printf(\"\\n\");  /* end the listing */\n}\n\nstruct LuaObject{\n\tlua_State* L;\n\tint lua_index;\n\tthis( lua_State* l, int index ){\n\t\tL = l;\n\t\tlua_index = index;\n\t}\n\tauto as(T)(){\n\t\tlua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);\n\t\tauto r = L.LuaConvert!T;\n\t\tlua_pop(L, 1);\n\t\treturn r;\n\t}\n\n\tauto fun(ReturnType = void, Args...)( Args args ){\n\t\tlua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);\n\t\tLuaFunCall!ReturnType(L, args);\n\t\tauto r = LuaConvert!ReturnType(L);\n\t\tlua_pop(L, 1);\n\t\treturn r;\n\t}\n\n\tauto opIndex( string var ){\n\t\tlua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);\n\t\tif( lua_istable(L, -1) ){\n\t\t\tlua_pushstring(L, var.toStringz);\n\t\t\tlua_gettable(L, -2);\n\t\t}else{\n\t\t\tlua_getglobal(L, var.toStringz);\n\t\t}\n\t\treturn LuaObject( L, luaL_ref(L, LUA_REGISTRYINDEX ) );\n\t}\n\n\tauto opIndexAssign( Type )(Type val, string var ){\n\t\tlua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);\n\t\tLuaPushValue(L, var);\n\t\tLuaPushValue(L, val);\n\t\tlua_settable(L, -3);\n\t}\n}\n\nstruct LuaTable{\n\n}\n\nauto Lunad(){\n\treturn LunadStruct( luaL_newstate() );\n}\n\nauto inc(int x){\n\treturn x + 1;\n}\n\nvoid LuaPushFunction2(Fun)(lua_State* L , Fun fun ){\n\n\textern(C) auto inner(lua_State* L) nothrow {\n\t\timport std.traits   : Parameters, ReturnType;\n\t\timport std.typecons : Tuple;\n\t\timport core.stdc.stdio: printf;\n\n\t\ttry{\n\t\t\t/*GET FUNCTION*/\n\t\t\t//LuaDump(L);\n\n\t\t\tauto f = cast(Fun) lua_touserdata(L,1);\n\t\t\t//LuaDump(L);\n\t\t\twriteln(f(10));\n\n\t\t\t///*INPUT*/\n\t\t\t//Tuple!(Parameters!Fun) args;\n\t\t\t//auto args_n = lua_gettop (L);\n\t\t\t//foreach( i, Type ; Parameters!Fun ){\n\t\t\t//\timmutable int offset \t= cast(int)(-1 - i);\n\t\t\t//\timmutable size_t index  = args.length - i - 1;\n\t\t\t//\tstatic if( __traits(isIntegral, Type) ){\n\t\t\t//\t\targs[index] = cast(Type)lua_tointeger(L,  offset );\n\t\t\t//\t}else static if( __traits(isFloating, Type) ){\n\t\t\t//\t\targs[index] = cast(Type)lua_tonumber(L, offset );\n\t\t\t//\t}else static if( is(Type == string ) ){\n\t\t\t//\t\targs[index] = cast(Type)lua_tostring(L, offset ).fromStringz;\n\t\t\t//\t}\n\t\t\t//}\n\n\t\t\t///*RETURN*/\n\t\t\t//alias Return = ReturnType!Fun;\n\t\t\t//auto r = fun(args.expand);\n\t\t\t//static if( __traits(isIntegral, Return) ){\n\t\t\t//\tlua_pushinteger(L, r);\n\t\t\t//}else static if( __traits(isFloating, Return) ){\n\t\t\t//\tlua_pushnumber(L, r);\n\t\t\t//}else static if( is(Return == string ) ){\n\t\t\t//\tlua_pushstring(L, r.toStringz);\n\t\t\t//}\n\n\t\t}catch(Exception e){ printf( e.msg.toStringz );}\n\t\treturn 1;\n\t}\n\tlua_pushlightuserdata(L, fun);\n\tluaL_newmetatable(L, \"__meta_fun\");\n\tlua_pushcfunction(L, &inner);\n\tlua_setfield(L, -2, \"__call\");\n  \tlua_setmetatable(L, -2);\n}\n\nstruct Teste{\n\tlua_State* L;\n\tauto opIndexAssign( Type )(Type val, string var ){\n\t\timport std.traits : isSomeFunction;\n\n\t\tstatic if( isSomeFunction!Type ){\n\t\t\tLuaPushFunction2(L, val);\n\t\t}else{\n\t\t\tLuaPushValue(L, val);\n\t\t}\n\t\tlua_setglobal(L, var.toStringz);\n\t}\n}\n\nvoid main(){\n\timport std.traits;\n\n\tauto lua = Lunad();\n\n\n\n\t//lua[\"x\"].as!int.writeln;\n\n\t//lua_pushinteger(lua.L, 100);\n //   lua_setglobal(lua.L, \"y\".toStringz );\n\tlua[\"y\"] = 100;\n\t//\n\t//lua[\"y\"].as!int.writeln;\n\n\tlua[\"info\"] = LuaTable();\n\tlua[\"info\"][\"name\"] = \"Patric\";\n\tlua[\"info\"][\"age\"] = \"31\";\n\tlua[\"info\"][\"other\"] = LuaTable();\n\tlua[\"info\"][\"other\"][\"value\"] = 10;\n\n\tlua.doFile(\"main.lua\");\n\n\n\tlua[\"person\"][\"name\"].as!string.writeln;\n\tlua[\"person\"][\"last\"].as!string.writeln;\n\tlua[\"person\"][\"age\"].as!string.writeln;\n\n\tlua[\"person\"][\"infos\"][\"a\"].as!string.writeln;\n\tlua[\"person\"][\"infos\"][\"b\"].as!string.writeln;\n\n\n\n\t//lua[\"info\"][\"name\"].as!string.writeln;\n\t//lua[\"info\"][\"age\"].as!int.writeln;\n\t//lua[\"info\"][\"other\"][\"value\"].as!int.writeln;\n\n\tlua[\"inc\"] = &inc;\n\tlua.doFile(\"main.lua\");\n\n\n\t//foreach( member ; __traits( allMembers, Test ) ){\n\t//\tstatic if( mixin( FieldGet!(Test, member)) ) {\n\t//\t\twriteln( \"GETTER : \", member );\n\t//\t}\n\t//\tstatic if( mixin( FieldSet!(Test, member)) ) {\n\t//\t\twriteln( \"SETTER : \", member );\n\t//\t}\n\t//\t//writeln( is ( typeof(__traits(getMember,Test, member)) == function ));\n\t//\tstatic if( mixin( FunctionCall!(Test, member)) ) {\n\t//\t\twriteln( \"IS FUNCTION : \", member );\n\t//\t}\n\n\t//\tstatic if(__traits(isTemplate, __traits(getMember, Test, member))){\n\t//\t\twriteln( \"IS template : \", member );\t\n\t//\t}\n\t//}\n\t\n\n\n\n\t//Test t; t.x = typeof( t.x ).init ;\n\t\n\t//LuaFunConvert!mult(lua.L);\n\t//LuaFunConvert!div(lua.L);\n\t//LuaFunConvert!concat(lua.L);\n\n\t//getStructMembers!Test.writeln;\n\n\t//lua.doString( `\n\t//__metastruct = {\n\t//\t__index = function( _table, _field )\n\t//\t\tprint(_table, _field)\n\t//\tend\n\t//}` );\n\n\t//lua_pushcfunction( lua.L, &__call);\n\t//lua_setglobal( lua.L, \"Test\" );\n\n\t//lua.doFile(\"main.lua\");\n\t//auto f = lua[\"foo\"];\n}\n",
 			"file": "source/app.d",
-			"file_size": 10616,
-			"file_write_time": 131211420194325279,
 			"settings":
 			{
-				"buffer_size": 9760,
+				"buffer_size": 8384,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/roguelikegames.txt",
+			"file": "source/funcs.d",
 			"settings":
 			{
-				"buffer_size": 179,
+				"buffer_size": 264,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -543,7 +541,16 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 178,
+				"buffer_size": 196,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/roguelikegames.txt",
+			"settings":
+			{
+				"buffer_size": 179,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -564,21 +571,37 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 160.0,
-		"last_filter": "push",
+		"height": 375.0,
+		"last_filter": "move",
 		"selected_items":
 		[
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"new file",
+				"ANF: New File"
+			],
 			[
 				"push",
 				"Git: Push"
 			],
 			[
-				"pu",
-				"Git: Push"
+				"quickc",
+				"Git: Quick Commit"
+			],
+			[
+				"quick ",
+				"Git: Quick Add"
 			],
 			[
 				"quick",
-				"Git: Quick Commit"
+				"Git: Quick Add"
+			],
+			[
+				"pu",
+				"Git: Push"
 			],
 			[
 				"quic",
@@ -607,10 +630,6 @@
 			[
 				"quic add",
 				"Git: Quick Add"
-			],
-			[
-				"move",
-				"File: Move"
 			],
 			[
 				"syntaxlua",
@@ -881,10 +900,6 @@
 				"Set Syntax: GLSL"
 			],
 			[
-				"new file",
-				"ANF: New File"
-			],
-			[
 				"gls",
 				"Set Syntax: GLSL"
 			],
@@ -1012,7 +1027,8 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/this_/Desktop/lunad"
+		"/C/Users/this_/Desktop/lunad",
+		"/C/Users/this_/Desktop/lunad/source"
 	],
 	"file_history":
 	[
@@ -1163,6 +1179,40 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"writeln",
+			"args",
+			"print",
+			"div",
+			"alias",
+			"mangle_fun",
+			"inner",
+			"add",
+			"addd",
+			"Return",
+			"add",
+			"val",
+			"stringof",
+			"add",
+			"666",
+			"lua",
+			"regFunctions",
+			"getProtection",
+			"Module",
+			"allMembers",
+			"  ",
+			"Module",
+			"module",
+			"main",
+			"ìnt",
+			"void",
+			"teste",
+			"Test",
+			"main",
+			"userdata",
+			"LuaFun",
+			"LuaFunCall",
+			"LuaConvert",
+			"stdlib",
 			"LuaPushValue",
 			"LuaFunCall",
 			"age",
@@ -1256,41 +1306,7 @@
 			"Test",
 			"auto",
 			"t",
-			"FieldGet",
-			"member",
-			"__traits",
-			"return",
-			"FieldGet",
-			"IsField",
-			"enum",
-			"auto",
-			"teste",
-			"name",
-			"NAME",
-			"auto",
-			"value",
-			"void",
-			"\n\t",
-			"tuple",
-			"name",
-			"functions",
-			"members",
-			"auto",
-			"memebrs",
-			"mmebers",
-			"print",
-			"fromStringz",
-			"lua_tostring",
-			"tab",
-			"userdata",
-			"table",
-			" =",
-			"int",
-			"table",
-			"lua",
-			"__call",
-			"L,",
-			"inner"
+			"FieldGet"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1317,15 +1333,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9760,
+						"buffer_size": 8384,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3283,
-								3283
+								3444,
+								3444
 							]
 						],
 						"settings":
@@ -1337,15 +1353,15 @@
 								{
 									"1":
 									[
-										4575,
-										4576
+										3444,
+										3445
 									]
 								},
 								"icon":
 								{
 									"1":
 									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"Packages/BracketHighlighter/icons/round_bracket.png",
 										"brackethighlighter.default"
 									]
 								},
@@ -1353,8 +1369,8 @@
 								{
 									"1":
 									[
-										3279,
-										3280
+										3412,
+										3413
 									]
 								},
 								"unmatched":
@@ -1363,11 +1379,41 @@
 							},
 							"bracket_highlighter.regions":
 							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -1378,53 +1424,23 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_c_define_content"
 							],
 							"history_list_is_closing": true,
 							"syntax": "Packages/D/D.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2232.0,
+						"translation.y": 1783.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1432,6 +1448,243 @@
 				},
 				{
 					"buffer": 1,
+					"file": "source/funcs.d",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 264,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								222,
+								222
+							]
+						],
+						"settings":
+						{
+							"_anf_new": "",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										233,
+										234
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										222,
+										223
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"syntax": "Packages/D/D.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 18.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "main.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								178,
+								178
+							]
+						],
+						"settings":
+						{
+							"_anf_new": "",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										178,
+										179
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										171,
+										172
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "/D/roguelikegames.txt",
 					"semi_transient": false,
 					"settings":
@@ -1533,125 +1786,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "main.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 178,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								132,
-								132
-							]
-						],
-						"settings":
-						{
-							"_anf_new": "",
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										132,
-										133
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/double_quote.png",
-										"brackethighlighter.default"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										125,
-										126
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/Lua/Lua.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
+					"buffer": 4,
 					"semi_transient": false,
 					"settings":
 					{
@@ -1758,13 +1893,132 @@
 								"bh_unmatched_content"
 							],
 							"default_dir": "C:\\Users\\this_\\Desktop\\lunad",
-							"syntax": "Packages/D/D.sublime-syntax"
+							"syntax": "Packages/D/D.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "main.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								139,
+								139
+							]
+						],
+						"settings":
+						{
+							"_anf_new": "",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										132,
+										133
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										125,
+										126
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/Lua/Lua.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1831,19 +2085,23 @@
 		"selected_items":
 		[
 			[
-				"re",
-				"README.md"
-			],
-			[
 				"main",
 				"main.lua"
 			],
 			[
-				"appd",
+				"app",
 				"source\\app.d"
 			],
 			[
-				"app",
+				"funcs",
+				"source\\funcs.d"
+			],
+			[
+				"re",
+				"README.md"
+			],
+			[
+				"appd",
 				"source\\app.d"
 			],
 			[

@@ -74,50 +74,38 @@ auto LuaGetValue(Type)(lua_State* L, int index = -1 ){
 	return r; 
 }
 
-void LuaPushFunction(Fun)(lua_State* L , Fun fun ){
-	extern(C) auto inner(lua_State* L) nothrow {
+extern(C) auto inner(Fun, alias Name) (lua_State* L) nothrow {
 		import std.traits   : Parameters, ReturnType;
 		import std.typecons : Tuple;
 		import core.stdc.stdio: printf;
 
+		alias Args = Parameters!Fun;
+		alias Return = ReturnType!Fun;
+
 		try{
 			/*GET FUNCTION*/
-			auto fun = cast(Fun) lua_touserdata(L,1);
+			auto fun = cast(Fun) lua_touserdata(L,lua_upvalueindex(1));
 
 			/*INPUT*/
-			Tuple!(Parameters!Fun) args;
-			auto args_n = lua_gettop (L);
-			foreach( i, Type ; Parameters!Fun ){
-				immutable int offset 	= cast(int)(-1 - i);
-				immutable size_t index  = args.length - i - 1;
-				static if( __traits(isIntegral, Type) ){
-					args[index] = cast(Type)lua_tointeger(L,  offset );
-				}else static if( __traits(isFloating, Type) ){
-					args[index] = cast(Type)lua_tonumber(L, offset );
-				}else static if( is(Type == string ) ){
-					args[index] = cast(Type)lua_tostring(L, offset ).fromStringz;
-				}
-			}
+			Args args;
+			foreach( index, Type ; Args )
+				args[index] = LuaGetValue!Type(L, index + 1);
 
 			/*RETURN*/
-			alias Return = ReturnType!Fun;
-			auto r = fun(args.expand);
-			static if( __traits(isIntegral, Return) ){
-				lua_pushinteger(L, r);
-			}else static if( __traits(isFloating, Return) ){
-				lua_pushnumber(L, r);
-			}else static if( is(Return == string ) ){
-				lua_pushstring(L, r.toStringz);
+			static if( is(Return == void) ){
+				fun(args);
+				lua_pushnil(L);
+			}else{
+				LuaPushValue!Return(L, fun(args) );
 			}
 
 		}catch(Exception e){ printf( e.msg.toStringz );}
 		return 1;
 	}
+
+void LuaPushFunction(Fun)(lua_State* L , Fun fun ){
 	lua_pushlightuserdata(L, fun);
-	luaL_newmetatable(L, "__meta_fun");
-	lua_pushcfunction(L, &inner);
-	lua_setfield(L, -2, "__call");
-  	lua_setmetatable(L, -2);
+	lua_pushcclosure(L, &inner!(Fun, Fun.mangleof),1);
 }
 
 
@@ -172,6 +160,20 @@ struct LunadStruct{
 		}
 		lua_setglobal(L, var.toStringz);
 	}
+
+	/*REG FUNCTIONS*/
+
+	auto regFunctions( alias Module )(){
+		foreach( member ; __traits( allMembers, Module) ){
+			static if( __traits( compiles , __traits( getMember, Module, member) ) ){
+				static if( is( typeof(__traits( getMember, Module, member)) == function ) ){
+					this[member] = &__traits( getMember, Module, member);
+				}
+			}
+		}
+
+	}
+
 	//auto register( Type )(){
 	//	foreach( member ; __traits( allMembers, Test ) ){
 	//		static if( mixin( FieldGet!(Test, member)) ) {
@@ -208,13 +210,13 @@ struct LuaObject{
 		return r;
 	}
 
-	auto fun(ReturnType = void, Args...)( Args args ){
-		lua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);
-		LuaFunCall!ReturnType(L, args);
-		auto r = LuaConvert!ReturnType(L);
-		lua_pop(L, 1);
-		return r;
-	}
+	//auto fun(ReturnType = void, Args...)( Args args ){
+	//	lua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);
+	//	LuaFunCall!ReturnType(L, args);
+	//	auto r = LuaConvert!ReturnType(L);
+	//	lua_pop(L, 1);
+	//	return r;
+	//}
 
 	auto opIndex( string var ){
 		lua_rawgeti(L, LUA_REGISTRYINDEX, lua_index);
@@ -248,6 +250,8 @@ auto Lunad(){
 	return LunadStruct( luaL_newstate() );
 }
 
+import funcs;
+
 void main(){
 	import std.traits;
 
@@ -256,10 +260,16 @@ void main(){
 	lua["x"] = 10;
 	lua["x"].as!int.writeln;
 
+	lua.regFunctions!funcs;
+	
+	lua.doFile("main.lua");
+
+
 	//NEXT TODO
 	//metatables is missing!! something like : 
 	//lua["mt"] = LuaMetaTable();
-	//lua.setmetatable("table", "mt");
+	//lua.setmetatable("table", "mt"); or
+	//lua["table"].setmetatable("mt");
 	//lua.registerModule!main(int, float);
 	//lua.registerStruct!Test(int, float);
 	//lua.registerTemplate!template_func(int, float);
